@@ -1,0 +1,76 @@
+
+.register-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.register-container h2 {
+  margin-bottom: 8px;
+  color: #1e293b;
+  text-align: center;
+}
+
+.register-container > p {
+  color: #64748b;
+  text-align: center;
+}
+
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.register-container label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.register-container input {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.register-container input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.register-container button {
+  margin-top: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-container button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.register-container .success-message {
+  color: #15803d;
+}
+
+.register-container .error-message {
+  color: #dc2626;
+}
+
+.register-container a {
+  color: #2563eb;
+  text-decoration: none;
+}

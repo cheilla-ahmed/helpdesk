@@ -1,0 +1,113 @@
+<div class="page-header">
+  <div>
+    <h1>Tickets</h1>
+    <p>Consultez les tickets enregistrés dans HelpDesk.</p>
+   <p class="ticket-count">
+  {{ tickets.length }}
+  ticket{{ tickets.length > 1 ? 's' : '' }}
+  enregistré{{ tickets.length > 1 ? 's' : '' }}
+</p>
+  </div>
+
+  <a routerLink="/tickets/new" class="new-ticket-button">
+    + Nouveau ticket
+  </a>
+</div>
+
+
+
+
+<div *ngIf="isLoading" class="loading-message">
+  Chargement des tickets en cours...
+</div>
+
+<div *ngIf="errorMessage" class="error-message" role="alert">
+  {{ errorMessage }}
+  <button type="button" (click)="loadTickets()">Réessayer</button>
+</div>
+
+
+
+<div *ngIf="!isLoading && !errorMessage" class="ticket-table-container">
+  
+
+<div class="ticket-filters">
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Rechercher un ticket..."
+      aria-label="Rechercher un ticket"
+    />
+  </div>
+
+  <select
+    [(ngModel)]="selectedStatus"
+    aria-label="Filtrer par statut"
+  >
+    <option value="ALL">Tous les statuts</option>
+    <option value="OPEN">Ouvert</option>
+    <option value="IN_PROGRESS">En cours</option>
+    <option value="RESOLVED">Résolu</option>
+    <option value="CLOSED">Fermé</option>
+  </select>
+</div>
+
+
+ 
+  <table>
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Priorité</th>
+        <th>Statut</th>
+        <th>Description</th>
+        <th>Créé le</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let ticket of filteredTickets">
+        <td>{{ ticket.title }}</td>
+        
+<td>
+  <span
+    class="priority-badge"
+    [ngClass]="'priority-' + (ticket.priority || 'MEDIUM').toLowerCase()"
+  >
+    {{ ticket.priority || 'MEDIUM' }}
+  </span>
+</td>
+
+        
+<td>
+  <span
+    class="status-badge"
+    [ngClass]="'status-' + (ticket.status || 'OPEN').toLowerCase()"
+  >
+    {{ ticket.status || 'OPEN' }}
+  </span>
+</td>
+
+        <td>{{ ticket.description }}</td>
+        <td>{{ ticket.createdAt ? (ticket.createdAt | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
+
+        <td>
+  <a [routerLink]="['/tickets', ticket.id]" class="details-button">
+    Voir les détails
+  </a>
+</td>
+
+      </tr>
+
+      
+
+      <tr *ngIf="filteredTickets.length === 0">
+        <td colspan="6" class="empty-message">
+          Aucun ticket trouvé.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

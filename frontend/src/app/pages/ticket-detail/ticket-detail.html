@@ -1,0 +1,76 @@
+
+<div class="page-header">
+  <div>
+    <h1>Détails du ticket</h1>
+    <p>Consultez toutes les informations de ce ticket.</p>
+  </div>
+
+ <a href="/tickets" class="back-button">
+  ← Retour aux tickets
+</a>
+</div>
+
+<div *ngIf="isLoading" class="loading-message">
+  Chargement du ticket...
+</div>
+
+<div *ngIf="errorMessage" class="error-message" role="alert">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" class="success-message" role="status">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="!isLoading && !errorMessage && ticket" class="ticket-detail-card">
+  <h2>{{ ticket.title }}</h2>
+
+  <div class="detail-row">
+    <strong>Description :</strong>
+    <p>{{ ticket.description || 'Aucune description' }}</p>
+  </div>
+
+  <div class="detail-row">
+    <strong>Priorité :</strong>
+    <span
+      class="priority-badge"
+      [ngClass]="'priority-' + (ticket.priority || 'MEDIUM').toLowerCase()"
+    >
+      {{ ticket.priority || 'MEDIUM' }}
+    </span>
+  </div>
+
+  <div class="detail-row">
+  <strong>Statut :</strong>
+
+  <span
+    class="status-badge"
+    [ngClass]="'status-' + (ticket.status || 'OPEN').toLowerCase()"
+  >
+    {{ ticket.status || 'OPEN' }}
+  </span>
+
+  <select
+  #statusSelect
+  [value]="ticket.status"
+  [disabled]="isUpdatingStatus"
+  (change)="changeStatus(statusSelect.value)"
+>
+    <option value="OPEN">Ouvert</option>
+    <option value="IN_PROGRESS">En cours</option>
+    <option value="RESOLVED">Résolu</option>
+    <option value="CLOSED">Fermé</option>
+  </select>
+
+  <span *ngIf="isUpdatingStatus" class="updating-message">
+  Mise à jour en cours...
+</span>
+</div>
+
+  <div class="detail-row">
+    <strong>Créé le :</strong>
+    <span>
+      {{ ticket.createdAt ? (ticket.createdAt | date:'dd/MM/yyyy HH:mm') : '—' }}
+    </span>
+  </div>
+</div>

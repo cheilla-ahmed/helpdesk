@@ -1,0 +1,49 @@
+
+@if (router.url === '/login' || router.url === '/register') {
+  <router-outlet></router-outlet>
+} @else {
+  <div class="layout">
+    <aside class="sidebar">
+      <h2 class="logo">HelpDesk</h2>
+
+      
+@if (currentUser) {
+  <div class="user-profile">
+    <p class="user-name">{{ currentUser.name }}</p>
+    <p class="user-role">
+      {{ currentUser.role === 'ADMIN' ? 'Administrateur' : 'Utilisateur' }}
+    </p>
+  </div>
+}
+
+
+      <nav>
+        <a class="nav-link"
+           routerLink="/dashboard"
+           routerLinkActive="active">
+          Tableau de bord
+        </a>
+
+        <a class="nav-link"
+           routerLink="/tickets"
+           routerLinkActive="active">
+          Mes tickets
+        </a>
+
+       
+      </nav>
+
+      <button class="logout-button" (click)="logout()">
+        Déconnexion
+      </button>
+
+      <div class="sidebar-footer">
+        Gestion du support informatique
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+}

@@ -1,0 +1,115 @@
+
+<header class="topbar">
+  <div>
+    <h1>Tableau de bord</h1>
+    <p>Bienvenue sur votre espace de support.</p>
+  </div>
+
+  <div class="user-profile">
+  <div class="avatar">
+    {{ currentUser?.name?.charAt(0)?.toUpperCase() || 'U' }}
+  </div>
+  <span>{{ currentUser?.name || 'Utilisateur' }}</span>
+</div>
+</header>
+
+<section class="stats">
+ <article class="stat-card">
+  <p>Total des tickets</p>
+  <h2>{{ totalTickets }}</h2>
+  <span>Tickets enregistrés</span>
+</article>
+
+  <article class="stat-card">
+    <p>Ouverts</p>
+    <h2>{{ openTickets }}</h2>
+    <span>En attente de traitement</span>
+  </article>
+
+  <article class="stat-card">
+    <p>En cours</p>
+    <h2>{{ inProgressTickets }}</h2>
+    <span>En cours de résolution</span>
+  </article>
+
+  <article class="stat-card">
+    <p>Résolus</p>
+    <h2>{{ resolvedTickets }}</h2>
+    <span>Tickets terminés</span>
+  </article>
+</section>
+
+<section class="tickets-section">
+  <div class="section-header">
+    <div>
+      <h2>Tickets récents</h2>
+      <p>Suivez l'évolution de vos demandes.</p>
+    </div>
+
+    
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Sujet</th>
+          <th>Priorité</th>
+          <th>Statut</th>
+          <th>Date de création</th>
+        </tr>
+      </thead>
+
+    
+<tbody>
+  <tr *ngFor="let ticket of tickets.slice(0, 5)">
+    <td>#{{ ticket.id }}</td>
+    <td>{{ ticket.title }}</td>
+    <td>
+      <span
+        class="priority"
+        [ngClass]="{
+          'high': ticket.priority === 'HIGH',
+          'medium': ticket.priority === 'MEDIUM',
+          'low': ticket.priority === 'LOW'
+        }"
+      >
+        {{
+          ticket.priority === 'HIGH' ? 'Élevée' :
+          ticket.priority === 'MEDIUM' ? 'Moyenne' :
+          ticket.priority === 'LOW' ? 'Faible' :
+          ticket.priority
+        }}
+      </span>
+    </td>
+    <td>
+      <span
+        class="status"
+        [ngClass]="{
+          'open': ticket.status === 'OPEN',
+          'progress': ticket.status === 'IN_PROGRESS',
+          'resolved': ticket.status === 'RESOLVED',
+          'closed': ticket.status === 'CLOSED'
+        }"
+      >
+        {{
+          ticket.status === 'OPEN' ? 'Ouvert' :
+          ticket.status === 'IN_PROGRESS' ? 'En cours' :
+          ticket.status === 'RESOLVED' ? 'Résolu' :
+          ticket.status === 'CLOSED' ? 'Fermé' :
+          ticket.status
+        }}
+      </span>
+    </td>
+    <td>{{ ticket.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+  </tr>
+
+  <tr *ngIf="tickets.length === 0">
+    <td colspan="4">Aucun ticket disponible.</td>
+  </tr>
+</tbody>
+
+    </table>
+  </div>
+</section>
